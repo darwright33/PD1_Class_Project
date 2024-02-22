@@ -11,6 +11,9 @@ deploy-options.json
 # LWC VSCode autocomplete
 **/lwc/jsconfig.json
 
+# Random things to ingore
+apex.db
+
 # LWC Jest coverage reports
 coverage/
 
@@ -43,3 +46,5 @@ $RECYCLE.BIN/
 **/__pycache__/
 **/.venv/
 **/venv/
+.sfdx/tools/248/apex.db
+.sfdx/tools/248/apex.db
