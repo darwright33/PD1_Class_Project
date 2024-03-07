@@ -1,0 +1,17 @@
+<template>
+    <lightning-card  title="My Component">
+        <lightning-button title="Show Contacts" label="Show Contacts" onclick={toggleView} class="slds-m-left_small"></lightning-button>
+        <template lwc:if={showContacts}>
+            <template for:each={contacts} for:item="con" for:index="idx">
+                <div key={con.Id} class="slds-m-top_small">
+                    <p class="slds-m-left_small">
+                        {idx}.|| ROW NUMBER: {con.rowNum} || Name: {con.Name} | Title: {con.Title}
+                    </p>
+                </div>
+            </template>
+        </template>
+        <template lwc:else>
+            <p class="slds-m-left_small"> Nothing to show here...</p>
+        </template>
+    </lightning-card>
+</template>
