@@ -1,0 +1,10 @@
+<template>
+    <lightning-card title="Parent & Child Component">
+        <div class="slds-card__body slds-card__body--inner" >
+            <p>Is child speaking? {childSpeak}</p>
+    
+        <c-child-comp child-name="Ace" age="2" oncrying={handleFit}></c-child-comp>
+        </div>
+        
+    </lightning-card>
+</template>

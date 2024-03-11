@@ -1,0 +1,19 @@
+<template>
+    <div class="slds-m-top_small">
+        <lightning-card title="Account Opps" >    
+            <template lwc:if={loadingOpps}>
+                <lightning-spinner></lightning-spinner>
+            </template>
+            <template lwc:if={showOpps}>
+                <lightning-datatable
+                        key-field="Id"
+                        data={opps}
+                        columns={columns}>
+                </lightning-datatable>
+            </template>
+            <template lwc:else>
+                <p class="slds-m-left_small"> There are no opps!</p>
+            </template>
+        </lightning-card>
+    </div>
+</template>
