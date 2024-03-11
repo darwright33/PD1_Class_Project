@@ -14,6 +14,8 @@ const columns = [
 export default class RelatedOppsComponent extends LightningElement {
 
     @api recordId;
+    @api selectedId;
+    @api selectedName;
 
     columns = columns;
 
@@ -32,9 +34,14 @@ export default class RelatedOppsComponent extends LightningElement {
                 this.error = error;
             })
             .finally(() => {
-                console.log('Finally OPPPPPPS! :) ')
+                //console.log('Finally OPPPPPPS! :) ')
                 this.loadingOpps = false;  
             });
+    }
+
+    handleOppEvent(event){
+        this.selectedId = event.detail.Id;
+        this.selectedName = event.detail.Name;
     }
 
 }

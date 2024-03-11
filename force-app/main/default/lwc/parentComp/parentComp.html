@@ -1,7 +1,9 @@
 <template>
     <lightning-card title="Parent & Child Component">
         <div class="slds-card__body slds-card__body--inner" >
-            <p>Is child speaking? {childSpeak}</p>
+            <template lwc:if={childSpeak}>
+                <p>Child is crying!</p>
+            </template>
     
         <c-child-comp child-name="Ace" age="2" oncrying={handleFit}></c-child-comp>
         </div>

@@ -1,6 +1,6 @@
 <template>
     <div class="slds-m-top_small">
-        <lightning-card title="Account Opps" >    
+        <!-- <lightning-card title="Account Opps" >    
             <template lwc:if={loadingOpps}>
                 <lightning-spinner></lightning-spinner>
             </template>
@@ -13,6 +13,22 @@
             </template>
             <template lwc:else>
                 <p class="slds-m-left_small"> There are no opps!</p>
+            </template>
+        </lightning-card> -->
+        <div>
+            <p>You selected: Id: {selectedId} {selectedName}</p>
+        </div>
+        <lightning-card title="Account Opps" >
+            <template for:each={opps} for:item="opp" >
+                <div key={opp.Id} class="slds-m-top_small">
+                    <c-opp-card opp-name={opp.Name} 
+                                opp-stage={opp.StageName} 
+                                opp-amount={opp.Amount} 
+                                opp-close-date={opp.CloseDate}
+                                opp-id={opp.Id}
+                                onoppselected={handleOppEvent}></c-opp-card>
+                </div>
+                
             </template>
         </lightning-card>
     </div>
