@@ -1,28 +1,60 @@
 import { LightningElement } from 'lwc';
 
+import getAccounts from "@salesforce/apex/AccountController.getAccounts";
+import relatedOpps from "@salesforce/apex/OpportunityController.relatedOpps";
+
 export default class BahExerciseThree extends LightningElement {
 
-    showOne = true;
+    showOne = false;
     showTwo = false;
-
-    accts = [
-        {Id: '111', Name: 'John', AnnualRevenue: '100000'},
-        {Id: '222', Name: 'Sarah Jane', AnnualRevenue: '123123456'},
-        {Id: '333', Name: 'Jack', AnnualRevenue: '1230000000'}
-    ];
-
-    opps = [
-        {Id: '111', Name: 'John Opp', Amount: '123456'},
-        {Id: '222', Name: 'Sarah Jane Opp', Amount: '444444'},
-        {Id: '333', Name: 'Jack Opp', Amount: '987654'}
-    ];
+    loadingAccounts = false;
+    loadingOpps = false;
+    accts;
+    opps;
 
     toggleSectionOne(){
-        this.showOne = !this.showOne;
+        if(this.showOne){
+            this.showOne = false;
+            
+        }else {
+            this.loadingAccounts = true;
+            getAccounts()
+            .then((result) => {
+                this.accts = result;
+                this.showOne = true;     
+            })
+            .catch((error) => {
+                this.error = error;
+                this.showOne = false;
+            })
+            .finally(() => {
+                console.log('Finally got accounts! :) ')
+                this.loadingAccounts = false;  
+            });
+        }
+        
     }
 
     toggleSectionTwo(){
-        this.showTwo = !this.showTwo;
-    }
-
+        if(this.showTwo){
+            this.showTwo = false;
+            
+        }else {
+            this.loadingOpps = true;
+            let acctId = this.accts[0].Id;
+            relatedOpps({ acctId: acctId })
+            .then((result) => {
+                this.opps = result;
+                this.showTwo = true;        
+            })
+            .catch((error) => {
+                this.error = error;
+                this.showTwo = false;
+            })
+            .finally(() => {
+                console.log('Finally got OPPPPPPS! :) ')
+                this.loadingOpps = false;  
+            });
+        }
+    }  
 }

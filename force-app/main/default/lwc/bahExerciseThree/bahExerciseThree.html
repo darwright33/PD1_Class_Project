@@ -1,11 +1,14 @@
 <template>
-    <lightning-card  title="My Accounts">
+    <lightning-card  title="My Accounts" >
         <lightning-button title="Show Accounts" label="Show Accounts" onclick={toggleSectionOne} class="slds-m-left_small"></lightning-button>
+        <template lwc:if={loadingAccounts}>
+            <lightning-spinner></lightning-spinner>
+        </template>
         <template lwc:if={showOne}>
             <template for:each={accts} for:item="a" for:index="idx">
                 <div key={a.Id} class="slds-m-top_small">
                     <p class="slds-m-left_small">
-                        {idx}. Name: {a.Name} | Annual Revenue: <lightning-formatted-number format-style="currency" value={a.AnnualRevenue} minimum-fraction-digits="2"></lightning-formatted-number>
+                        Name: {a.Name} | Annual Revenue: <lightning-formatted-number format-style="currency" value={a.AnnualRevenue} minimum-fraction-digits="2"></lightning-formatted-number>
                     </p>
                 </div>
             </template>
@@ -14,19 +17,27 @@
             <p class="slds-m-left_small"> Nothing to show here...</p>
         </template>
     </lightning-card>
-    <lightning-card title="My Opps">
-        <lightning-button title="Show Opportunities" label="Show Opportunities" onclick={toggleSectionTwo} class="slds-m-left_small"></lightning-button>
-        <template lwc:if={showTwo}>
-            <template for:each={opps} for:item="o" for:index="idx">
-                <div key={o.Id} class="slds-m-top_small">
-                    <p class="slds-m-left_small">
-                        {idx}. Name: {o.Name} | Amount: <lightning-formatted-number format-style="currency" value={o.Amount} minimum-fraction-digits="2"></lightning-formatted-number>
-                    </p>
-                </div>
-            </template>
-        </template>
-        <template lwc:else>
-            <p class="slds-m-left_small"> There are no opps!</p>
-        </template>
-    </lightning-card>
+    <template lwc:if={accts}>
+        <div class="slds-m-top_small">
+            <lightning-card title="My Opps" >    
+                <lightning-button title="Show Opportunities" label="Show Opportunities" onclick={toggleSectionTwo} class="slds-m-left_small"></lightning-button>
+                <template lwc:if={loadingOpps}>
+                    <lightning-spinner></lightning-spinner>
+                </template>
+                <template lwc:if={showTwo}>
+                    <template for:each={opps} for:item="o" for:index="idx">
+                        <div key={o.Id} class="slds-m-top_small">
+                            <p class="slds-m-left_small">
+                                Name: {o.Name} | Stage: {o.StageName} | Close Date: {o.CloseDate} | Amount: <lightning-formatted-number format-style="currency" value={o.Amount} minimum-fraction-digits="2"></lightning-formatted-number>
+                                
+                            </p>
+                        </div>
+                    </template>
+                </template>
+                <template lwc:else>
+                    <p class="slds-m-left_small"> There are no opps!</p>
+                </template>
+            </lightning-card>
+        </div>
+    </template>
 </template>

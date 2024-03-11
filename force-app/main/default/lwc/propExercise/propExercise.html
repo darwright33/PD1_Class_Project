@@ -1,0 +1,19 @@
+<template>
+    <lightning-card  title="Property Exercise" >
+        <div class="slds-box slds-m-bottom_medium ">
+            <p class="slds-m-bottom_medium">This is the section that Shubert wrote but never finished...</p>
+            <lightning-button title="Panda?" label="Panda?" onclick={showPanda} variant="brand"></lightning-button>
+        </div>
+        <template lwc:if={showDetails}>
+            <div class="slds-box">
+                <div class="slds-align_absolute-center">
+                    <img src="https://media1.tenor.com/m/bNJFA90EV4AAAAAd/skadoosh-kung-fu-panda.gif">
+                    
+                </div>
+                <div class="slds-align_absolute-center slds-m-top_medium">
+                    <lightning-button title="No Panda" label="No Panda" onclick={showPanda} variant="destructive" ></lightning-button>
+                </div>
+            </div>
+        </template>
+    </lightning-card>
+</template>

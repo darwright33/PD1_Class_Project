@@ -1,5 +1,19 @@
 <template>
-    <div class="myClass">Hello, {firstName}!</div>
-    <div class="GenWatt">Hello, {firstName}!</div>
-    <c-simple-greeting></c-simple-greeting>
+    <template lwc:if={firstName}>
+        <div class="slds-box slds-theme_default">
+            Hello, {firstName}
+        </div>
+    </template>
+    <template lwc:else>
+        <p>No first name!</p>
+    </template>
+
+
+
+    <!-- <div class="myClass">Hello, {firstName}!</div>
+    <div class="GenWatt">Hello, {firstName}!</div> -->
+
+    <c-simple-greeting greeting="Howdy" first-name="Sarah Jane"></c-simple-greeting>
+    <c-simple-greeting greeting="Hello hello hello" first-name="Nyssa"></c-simple-greeting>
+    <!-- <c-simple-greeting></c-simple-greeting> -->
 </template>

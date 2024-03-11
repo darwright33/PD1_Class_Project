@@ -1,5 +1,8 @@
 <template>
-    <div>
-        <p class="slds-text-title_caps" >This is the Child.</p>
+    <div class="slds-box slds-m-top_small">
+        <!-- <p class="slds-text-title_caps" >This is the Child.</p> -->
+        <p>My name is: {childName}.</p>
+        <p>I am {age} years old.</p>
+        <lightning-input type="checkbox" label="Respond to Parent" value={childSave} onchange={respondToParent} ></lightning-input>
     </div>
 </template>
