@@ -11,7 +11,8 @@ export default class ChildComp extends LightningElement {
 
         this.childSaid = !this.childSaid;
 
-        const myEvt = new CustomEvent('crying', { detail: {prop1: 'Hello', prop2: {firstName: 'Shane'}}});
+        // const myEvt = new CustomEvent('crying', { detail: {prop1: 'Hello', prop2: {firstName: 'Shane'}}});
+        const myEvt = new CustomEvent('crying', { detail: this.childSaid});
 
         this.dispatchEvent(myEvt);
 

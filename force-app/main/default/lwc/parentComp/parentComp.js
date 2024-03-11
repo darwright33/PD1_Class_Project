@@ -6,11 +6,11 @@ export default class ParentComp extends LightningElement {
 
 
     handleFit(event){
-        console.log(event)
+        //console.log(event)
 
         this.childSpeak = event.detail;
-        console.log('detail: ' + JSON.stringify(event.detail));
-        console.log('prop1: ' + event.detail.prop1);
+        //console.log('detail: ' + JSON.stringify(event.detail));
+        //console.log('prop1: ' + event.detail.prop1);
     }
 
 
