@@ -15,27 +15,27 @@ export default class OppRecordForm extends LightningElement {
 
     @api recordId;
     @api objectApiName;
+    @api layout = 'Compact';
+    @api mode = 'view';
 
     fields = fields;
 
-    oppRecordId = '006al0000004li7AAA'
+    recordSaved(event) {
+        if(event.type == 'success'){
+            const myEvt = new CustomEvent('submitted', { detail: 'success'});
+            this.dispatchEvent(myEvt);
+        }else {
+            const myEvt = new CustomEvent('submitted', { detail: 'fail'});
+            this.dispatchEvent(myEvt);
+        }
+    }
 
-
+    recordCanceled() {
+        const cancelEvent = new CustomEvent('submitted', { detail: 'canceled'});
+        this.dispatchEvent(cancelEvent);
+    }
 
 
 }
 
 
-
-// import { LightningElement, api } from 'lwc';
-
-// export default class OppRecordForm extends LightningElement {
-
-//     @api recordId;
-
-//     recordFields = ['Name', 'StageName', 'Amount'];
-
-//     recordSaved(event) {
-//         console.log(event);
-//     }
-// }

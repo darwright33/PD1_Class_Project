@@ -3,10 +3,15 @@
     <apiVersion>59.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>Opp Record Form</masterLabel>
-    <description>Shows USe lightning record form</description>
+    <description>Shows Use lightning record form</description>
     <targets>
         <target>lightning__RecordPage</target>
         <target>lightning__AppPage</target>
-        <target>lightning__HomePage</target>
     </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="layout" type="String" label='Select the Layout Type' datasource="Compact, Full" />
+            <property name="mode" type="String" label='Select the Mode Type' datasource="readonly, view, edit" />
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>
