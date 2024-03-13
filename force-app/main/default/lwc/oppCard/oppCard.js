@@ -1,4 +1,5 @@
 import { LightningElement, api } from 'lwc';
+import { RefreshEvent } from 'lightning/refresh';
 
 export default class OppCard extends LightningElement {
 
