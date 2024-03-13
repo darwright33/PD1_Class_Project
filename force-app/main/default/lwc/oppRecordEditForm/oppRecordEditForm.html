@@ -1,28 +1,82 @@
 <template>
-    <lightning-card title="Opporunity Details EDIT form">
-        <lightning-record-edit-form
-            record-id={recordId}
-            object-api-name={objectApiName}
-        >
-        <lightning-messages> </lightning-messages>
-        <lightning-output-field field-name="accountId">
-        </lightning-output-field>
-        <lightning-input-field field-name="Name"> </lightning-input-field>
-        <lightning-input-field field-name="Amount"> </lightning-input-field>
-        <lightning-input-field field-name="StageName"> </lightning-input-field>
-        <lightning-input-field field-name="CloseDate"> </lightning-input-field>
-        <lightning-input-field field-name="Type"> </lightning-input-field>
+    <template lwc:if={editMode}>
+        <lightning-card title="Opportunity Details EDIT form" class="slds-border_bottom">
+            <lightning-record-edit-form
+                record-id={recordId}
+                object-api-name={objectApiName}
+                onsuccess={toggleMode}
+            >
+            <lightning-messages> </lightning-messages>
+            <div class="slds-grid">
+                <div class="slds-col">
+                    <lightning-input-field field-name={nameField}> </lightning-input-field>
+                    <lightning-input-field field-name={amountField}> </lightning-input-field>
+                    <lightning-input-field field-name={typeField}> </lightning-input-field>
+                </div>
+                <div class="slds-col">
+                    <lightning-input-field field-name={stageField}> </lightning-input-field>
+                    <lightning-input-field field-name={closeDateField}> </lightning-input-field>
+                    
+                </div>
+            </div>
+    
+            <lightning-button
+                class="slds-m-top_medium"
+                variant="brand"
+                type="submit"
+                name="save"
+                label="Save"
+                icon-name="utility:save"
+            >
+            </lightning-button>
+            <lightning-button
+                class="slds-m-top_medium slds-m-left_medium"
+                variant="brand"
+                type="cancel"
+                name="cancel"
+                label="Cancel"
+                icon-name="utility:close"
+                onclick={toggleMode}
+            >
+            </lightning-button>
 
-        <lightning-button
-            class="slds-m-top_small"
-            variant="brand"
-            type="submit"
-            name="update"
-            label="Update"
-        >
-        </lightning-button>
-        </lightning-record-edit-form>
-    </lightning-card>
+            </lightning-record-edit-form>
+        </lightning-card>
+    </template>
+    <template lwc:else>
+        <lightning-card title="Opportunity Details VIEW form" class="slds-border_bottom">
+            <lightning-record-view-form 
+                record-id={recordId}
+                object-api-name={objectApiName}
+            >
+            <div class="slds-grid">
+                <div class="slds-col">
+                    <lightning-output-field field-name={nameField}> </lightning-output-field>
+                    <lightning-output-field field-name={amountField}> </lightning-output-field>
+                    <lightning-output-field field-name={typeField}> </lightning-output-field>
+                </div>
+                <div class="slds-col">
+                    <lightning-output-field field-name={stageField}> </lightning-output-field>
+                    <lightning-output-field field-name={closeDateField}> </lightning-output-field>
+                    
+                </div>
+            </div>      
+            <lightning-button
+                class="slds-m-top_medium"
+                variant="brand"
+                type="Switch to view"
+                name="Edit"
+                label="Edit"
+                icon-name="utility:edit" 
+                onclick={toggleMode}
+            ></lightning-button>
+            </lightning-record-view-form>
+            
+        </lightning-card>
+        
+    </template>
+    
+    
     
 
 

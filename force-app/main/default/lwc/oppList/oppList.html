@@ -1,0 +1,29 @@
+<template>
+    <div class="slds-box">
+        <template lwc:if={opps}>
+            <lightning-card title="Opp Info" variant="narrow" icon-name="standard:opportunity">
+                <template for:each={opps} for:item="o" >
+                    <div key={o.fields.Id.value} class="slds-box slds-m-bottom_small">
+                        <c-opp-card opp-name={o.fields.Name.value}
+                                opp-stage={o.fields.StageName.value}
+                                opp-amount={o.fields.Amount.value}
+                                opp-close-date={o.fields.CloseDate.value}
+                                opp-id={o.fields.Id.value}></c-opp-card>
+                    </div>
+                </template> 
+            </lightning-card>
+        </template>
+        <template lwc:elseif={error}>
+            <lightning-card title="Opp Info" variant="narrow" icon-name="standard:opportunity">
+                <p>Error: {error}</p>
+                
+            </lightning-card>
+        </template>
+        <template lwc:else>
+            <lightning-card title="Opp Info" variant="narrow" icon-name="standard:opportunity">
+                <p>Else... something broked?</p>
+            </lightning-card>
+        </template>
+    </div>
+    
+</template>

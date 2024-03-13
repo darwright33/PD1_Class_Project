@@ -1,0 +1,28 @@
+<template>
+    <div class="slds-box">
+        <template lwc:if={cases}>
+            <lightning-card title="Case Info" variant="narrow" icon-name="standard:case">
+                <template for:each={cases} for:item="c" >
+                    <div key={c.fields.Id.value} class="slds-m-bottom_small">
+                        <c-case-card 
+                                case-subject={c.fields.Subject.value}
+                                case-status={c.fields.Status.value}
+                                case-priority={c.fields.Priority.value}
+                                case-number={c.fields.CaseNumber.value}
+                                case-id={c.fields.Id.value}></c-case-card>
+                    </div>
+                </template> 
+            </lightning-card>
+        </template>
+        <template lwc:elseif={error}>
+            <lightning-card title="Case Info" variant="narrow" icon-name="standard:case">
+                <p>Error: {error}</p>                
+            </lightning-card>
+        </template>
+        <template lwc:else>
+            <lightning-card title="Case Info" variant="narrow" icon-name="standard:case">
+                <p>Else... something broked?</p>
+            </lightning-card>
+        </template>
+    </div>    
+</template>

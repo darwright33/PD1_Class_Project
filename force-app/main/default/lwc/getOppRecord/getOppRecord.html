@@ -1,0 +1,24 @@
+<template>
+    <div class="slds-box">
+        <template lwc:if={opp.data}>
+            <lightning-card title="Opp Info" icon-name="standard:opportunity">
+                <p>Name: {name}</p>
+                <p>Amount: {amount}</p>
+                <p>Stage: {stageName}</p>
+                <p>Close Date: {closeDate}</p>
+                <p>Type: {type}</p>
+            </lightning-card>
+        </template>
+        <template lwc:elseif={opp.error}>
+            <lightning-card title="Opp Info" icon-name="standard:opportunity">
+                <p>Error: {error}</p>
+                
+            </lightning-card>
+        </template>
+        <template lwc:else>
+            <lightning-card title="Opp Info" icon-name="standard:opportunity">
+                <p>Else... something broked?</p>
+            </lightning-card>
+        </template>
+    </div>    
+</template>
