@@ -1,0 +1,82 @@
+<template>
+    <template lwc:if={editMode}>
+        <div class="slds-box">
+            <lightning-card title="Account Details EDIT form" >
+                <lightning-record-edit-form
+                    record-id={recordId}
+                    object-api-name={objectApiName}
+                    onsuccess={toggleMode}
+                >
+                <lightning-messages> </lightning-messages>
+                <div class="slds-grid slds-m-bottom_small">
+                    <div class="slds-col">
+                        <lightning-input-field field-name={nameField}> </lightning-input-field>
+                        <lightning-input-field field-name={industryField}> </lightning-input-field>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-input-field field-name={annualRevField}> </lightning-input-field>
+                        <lightning-input-field field-name={phoneField}> </lightning-input-field>
+                        
+                    </div>
+                </div>
+        
+                <lightning-button
+                    class="slds-m-top_medium"
+                    variant="brand"
+                    type="submit"
+                    name="save"
+                    label="Save"
+                    icon-name="utility:save"
+                >
+                </lightning-button>
+                <lightning-button
+                    class="slds-m-top_medium slds-m-left_medium"
+                    variant="brand"
+                    type="cancel"
+                    name="cancel"
+                    label="Cancel"
+                    icon-name="utility:close"
+                    onclick={toggleMode}
+                >
+                </lightning-button>
+    
+                </lightning-record-edit-form>
+            </lightning-card>
+        </div>
+        
+    </template>
+    <template lwc:else>
+        <div class="slds-box">
+            <lightning-card title="Account Details VIEW form" class="slds-border_bottom">
+                <lightning-record-view-form 
+                    record-id={recordId}
+                    object-api-name={objectApiName}
+                >
+                <div class="slds-grid slds-m-bottom_small">
+                    <div class="slds-col">
+                        <lightning-output-field field-name={nameField}> </lightning-output-field>
+                        <lightning-output-field field-name={industryField}> </lightning-output-field>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-output-field field-name={annualRevField}> </lightning-output-field>
+                        <lightning-output-field field-name={phoneField}> </lightning-output-field>
+                        
+                    </div>
+                </div>      
+                <lightning-button
+                    class="slds-m-top_medium"
+                    variant="brand"
+                    type="Switch to view"
+                    name="Edit"
+                    label="Edit"
+                    icon-name="utility:edit" 
+                    onclick={toggleMode}
+                ></lightning-button>
+                </lightning-record-view-form>
+                
+            </lightning-card>
+        </div>
+        
+        
+    </template>
+</template>
