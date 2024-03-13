@@ -1,20 +1,5 @@
 <template>
     <div class="slds-m-top_small">
-        <!-- <lightning-card title="Account Opps" >    
-            <template lwc:if={loadingOpps}>
-                <lightning-spinner></lightning-spinner>
-            </template>
-            <template lwc:if={showOpps}>
-                <lightning-datatable
-                        key-field="Id"
-                        data={opps}
-                        columns={columns}>
-                </lightning-datatable>
-            </template>
-            <template lwc:else>
-                <p class="slds-m-left_small"> There are no opps!</p>
-            </template>
-        </lightning-card> -->
         <div>
             <p>You selected: Id: {selectedId} {selectedName}</p>
         </div>
@@ -32,4 +17,18 @@
             </template>
         </lightning-card>
     </div>
+    <template lwc:if={showDetails}>
+        <lightning-card title="Selected Opportunity Details" >
+            <lightning-record-form
+                record-id={selectedId}
+                object-api-name={objectName}
+                layout-type="Compact"
+                mode={mode}
+                onsuccess={recordSaved}
+                oncancel={recordCanceled}
+            >
+            </lightning-record-form>
+        </lightning-card>
+        
+    </template>
 </template>

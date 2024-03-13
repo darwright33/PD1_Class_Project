@@ -1,28 +1,14 @@
 <template>
-    <lightning-card title="Opporunity Details">
-        <lightning-record-form
+    <lightning-record-form
             record-id={recordId}
-            object-api-name="Opportunity"
+            object-api-name={objectApiName}
+            layout-type={layout}
+            mode={mode}
             fields={fields}
-
-
+            onsuccess={recordSaved}
+            oncancel={recordCanceled}
         >
         </lightning-record-form>
-    </lightning-card>
-    
-
-
 </template>
 
 
-
-<!-- <template>
-    <lightning-record-form 
-        record-id={recordId} 
-        object-api-name="Opportunity"
-        mode="edit"
-        columns="2"
-        fields={recordFields}
-        onsuccess={recordSaved}
-        ></lightning-record-form>
-</template> -->

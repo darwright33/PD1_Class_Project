@@ -1,0 +1,28 @@
+<template>
+    <lightning-card title="Form Toggle Edit/View">
+        <template lwc:if={readOnly}>
+            <lightning-button variant="brand" 
+                                label="Edit" 
+                                title="Edit Record" 
+                                icon-name="utility:edit" 
+                                class="slds-m-bottom_medium"
+                                onclick={editButtonClick}
+                >                                
+            </lightning-button>
+            <c-opp-record-form mode="readonly" record-id={recordId} object-api-name={objectApiName} onsubmitted={handleEvent}></c-opp-record-form>            
+        </template>
+        <template lwc:else>
+            <lightning-button variant="brand" 
+                                label="View" 
+                                title="View Record" 
+                                icon-name="utility:save"
+                                class="slds-m-bottom_medium"
+                                onclick={editButtonClick}
+                >
+            </lightning-button>
+            <c-opp-record-form mode="edit" record-id={recordId} object-api-name={objectApiName} onsubmitted={handleEvent}></c-opp-record-form>
+        </template>
+
+    </lightning-card>
+    
+</template>
