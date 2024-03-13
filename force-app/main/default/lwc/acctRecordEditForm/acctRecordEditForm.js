@@ -2,7 +2,7 @@ import { LightningElement, api } from 'lwc';
 
 import NAME_FIELD from '@salesforce/schema/Account.Name';
 import INDUSTRY_FIELD from '@salesforce/schema/Account.Industry';
-import ANNUAL_REVENU_FIELD from '@salesforce/schema/Account.AnnualRevenue';
+import ANNUAL_REVENUE_FIELD from '@salesforce/schema/Account.AnnualRevenue';
 import PHONE_FIELD from '@salesforce/schema/Account.Phone';
 
 export default class AcctRecordEditForm extends LightningElement {
@@ -14,7 +14,7 @@ export default class AcctRecordEditForm extends LightningElement {
 
     nameField = NAME_FIELD;
     industryField = INDUSTRY_FIELD;
-    annualRevField = ANNUAL_REVENU_FIELD;
+    annualRevField = ANNUAL_REVENUE_FIELD;
     phoneField = PHONE_FIELD;
 
     toggleMode(){
