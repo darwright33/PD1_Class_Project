@@ -1,6 +1,6 @@
 <template>
     <template lwc:if={contact.data}>
-        <lightning-card title="Contact Info" icon-name="standard-contact">
+        <lightning-card title="Contact Info" icon-name="standard:contact">
             <p>Name: {name}</p>
             <p>Email: {email}</p>
             <p>Phone: {phone}</p>
@@ -8,13 +8,13 @@
         </lightning-card>
     </template>
     <template lwc:elseif={contact.error}>
-        <lightning-card title="Contact Info" icon-name="standard-contact">
+        <lightning-card title="Contact Info" icon-name="standard:contact">
             <p>Error: {error}</p>
             
         </lightning-card>
     </template>
     <template lwc:else>
-        <lightning-card title="Contact Info" icon-name="standard-contact">
+        <lightning-card title="Contact Info" icon-name="standard:contact">
             <p>Else... something broked?</p>
         </lightning-card>
     </template>
