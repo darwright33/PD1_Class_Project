@@ -1,0 +1,14 @@
+<template>
+    <div class="slds-box">
+        <lightning-card title="Top Accounts List" icon-name="standard:account">
+            <template for:each={accounts} for:item="acct" for:index="idx">
+                <div key={acct.Id}>
+                    <c-acc-card rank={idx} name={acct.Name} annual-revenue={acct.AnnualRevenue}
+                            phone={acct.Phone} acct-id={acct.Id} 
+                            onselected={handleSelectedFromCard} 
+                            ></c-acc-card>
+                </div>
+            </template>
+        </lightning-card>
+    </div>    
+</template>

@@ -17,8 +17,8 @@ export default class CaseList extends LightningElement {
         if (data) {
             this.cases = data.records;
             this.error = undefined;
-            console.log( 'cases: ' + JSON.stringify(this.cases))
-            console.log( 'cases.fields: ' + JSON.stringify(this.cases.fields))
+            // console.log( 'cases: ' + JSON.stringify(this.cases))
+            // console.log( 'cases.fields: ' + JSON.stringify(this.cases.fields))
 
         } else if (error) {
             this.error = error;

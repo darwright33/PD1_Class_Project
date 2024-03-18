@@ -20,7 +20,7 @@ export default class OppList extends LightningElement {
 
         } else if (error) {
             this.error = error;
-            this.records = undefined;
+            this.opps = undefined;
         }
     }
 
