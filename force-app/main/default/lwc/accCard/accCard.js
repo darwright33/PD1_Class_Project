@@ -1,6 +1,5 @@
 import { LightningElement, api, wire } from 'lwc';
 import getContacts from '@salesforce/apex/ContactController.getContacts';
-import { refreshApex } from '@salesforce/apex';
 
 export default class AccCard extends LightningElement {
 

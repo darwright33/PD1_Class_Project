@@ -22,7 +22,7 @@
                                     <li class="slds-item" ><p><lightning-icon icon-name="standard:contact" size="xx-small" alternative-text="Contact"></lightning-icon></p></li>
                                     <li class="slds-item" ><p>{c.Name}</p></li>
                                     <li class="slds-item"><p>{c.Title}</p></li>
-                                    <li class="slds-item" ><p><lightning-icon icon-name="standard:email" size="xx-small" alternative-text="Email"></lightning-icon>&nbsp;{c.Email}</p></li>
+                                    <li class="slds-item" ><p><lightning-formatted-email value={c.Email}></lightning-formatted-email> </p></li>
                                 </ul>
                             </div>
                         </template>                        
