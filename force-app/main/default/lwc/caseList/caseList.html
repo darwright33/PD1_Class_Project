@@ -1,8 +1,18 @@
 <template>
     <div class="slds-box">
-        <template lwc:if={cases}>
-            <lightning-card title="Case Info" variant="narrow" icon-name="standard:case">
-                <template for:each={cases} for:item="c" >
+        <lightning-card title="Case Info" variant="narrow" icon-name="standard:case">
+        <div class="slds-m-bottom_medium">
+            <lightning-combobox
+            name="Status"
+            label="Select Filter to show Cases"
+            value={status}
+            placeholder="Select Status"
+            options={comboOptions}
+            onchange={handleComboboxChange} ></lightning-combobox>
+            
+        </div>
+        <template lwc:if={filteredCases}>            
+                <template for:each={filteredCases} for:item="c" >
                     <div key={c.fields.Id.value} class="slds-m-bottom_small">
                         <c-case-card 
                                 case-subject={c.fields.Subject.value}
@@ -12,17 +22,13 @@
                                 case-id={c.fields.Id.value}></c-case-card>
                     </div>
                 </template> 
-            </lightning-card>
         </template>
         <template lwc:elseif={error}>
-            <lightning-card title="Case Info" variant="narrow" icon-name="standard:case">
                 <p>Error: {error}</p>                
-            </lightning-card>
         </template>
-        <template lwc:else>
-            <lightning-card title="Case Info" variant="narrow" icon-name="standard:case">
-                <p>Else... something broked?</p>
-            </lightning-card>
+        <template lwc:if={noRecordsMatch}>
+            <c-no-records-to-display message="No Cases found that match the filter."></c-no-records-to-display>
         </template>
+    </lightning-card>
     </div>    
 </template>
