@@ -1,5 +1,7 @@
 import { LightningElement, api, wire } from 'lwc';
 import { getRelatedListRecords } from 'lightning/uiRelatedListApi';
+import { getPicklistValues } from 'lightning/uiObjectInfoApi';
+import STATUS_FIELD from '@salesforce/schema/Case.Status';
 
 export default class CaseList extends LightningElement {
 
@@ -11,12 +13,7 @@ export default class CaseList extends LightningElement {
     status = 'All';
     noRecordsMatch = false;
 
-    comboOptions = [{label: 'All', value: 'All'},
-                    {label: 'New', value: 'New'},
-                    {label: 'Working', value: 'Working'}, 
-                    {label: 'Escalated', value: 'Escalated'}, 
-                    {label: 'Closed', value: 'Closed'}
-                ]
+    comboOptions = [];
 
     @wire(getRelatedListRecords, {
         parentRecordId: '$recordId',
@@ -37,6 +34,28 @@ export default class CaseList extends LightningElement {
         }
     };
 
+    // recordType Id "012000000000000AAA" is used if no custom Record Types exist.
+    @wire(getPicklistValues, { recordTypeId: "012000000000000AAA", fieldApiName: STATUS_FIELD})
+    getPicklistValues({data, error}){
+        if(error){
+            console.error(error)
+        } else if(data){
+            this.comboOptions = [...data.values]
+            let all = {label: 'All', value: 'All'};
+            this.comboOptions.unshift(all)
+
+            // Iteration method:
+            /*
+            for(let item of data.values){
+                let comboOptions2 = [];
+                comboOptions2.push( {label: item.label, value: item.value})
+                console.log('comboOptions2: ' + JSON.stringify(comboOptions2))
+            }
+            */
+        }
+    }
+
+
     handleComboboxChange(event){
         this.status = event.detail.value;
         this.updateCaseList();
@@ -52,7 +71,7 @@ export default class CaseList extends LightningElement {
         } else {
             for(let i = 0; i < this.allCases.length; i++){
                 currentRecord = this.allCases[i];
-                
+
                 if(this.status === 'New' && currentRecord.fields.Status.value === 'New'){
                     this.filteredCases.push(currentRecord);                  
 
@@ -73,6 +92,11 @@ export default class CaseList extends LightningElement {
             
         }
     }
+
+
+    
+
+
 
 
 }
