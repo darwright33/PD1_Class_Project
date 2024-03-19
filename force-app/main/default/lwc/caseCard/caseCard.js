@@ -18,7 +18,6 @@ export default class CaseCard extends NavigationMixin(LightningElement) {
     }
 
     viewCase(){
-        console.log('caseId: ' + this.caseId)
         this[NavigationMixin.Navigate]({
             type: 'standard__recordPage',
             attributes: {
