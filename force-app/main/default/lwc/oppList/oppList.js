@@ -5,10 +5,10 @@ export default class OppList extends LightningElement {
 
     @api recordId
     
-
     error;
     allOpps = [];
     oppsToDisplay = false;
+    noRecordsMatch = false;
     status = 'All';
     filteredOpps = [];
     totalRecords = 0;
@@ -47,6 +47,11 @@ export default class OppList extends LightningElement {
         this.updateOppList();
     }
 
+    handleSelectedFromCard(event){
+        console.log('event detail: ' + JSON.stringify(event.detail));
+
+    }
+
     updateOppList(){
         this.filteredOpps = [];
         let currentRecord = {};       
@@ -75,10 +80,17 @@ export default class OppList extends LightningElement {
             
         }
 
+        if(this.filteredOpps.length === 0){
+            this.noRecordsMatch = true;
+        }
+
         this.totalRecords = this.filteredOpps.length;
         this.totalAmount = this.filteredOpps.reduce((prev, curr) => prev + curr.fields.Amount.value, 0);
 
         this.oppsToDisplay = this.filteredOpps.length > 0 ? true : false;
+
+        const myEvt = new CustomEvent('opprecordcount', { detail: {totalRecords: this.totalRecords}});
+        this.dispatchEvent(myEvt);
 
     }
 }

@@ -54,14 +54,6 @@ export default class CaseCard extends NavigationMixin(LightningElement) {
                     });
                     this.dispatchEvent(myToastEvent); 
                 }
-            } else {
-                    const myToastEvent = new ShowToastEvent({                        
-                        title: 'Something Broke!',
-                        message: 'Something happened, refresh and try again!',
-                        variant: 'error',
-                        mode: 'dismissible'
-                    });
-                    this.dispatchEvent(myToastEvent);   
             }
 
         })

@@ -28,7 +28,8 @@
                                         opp-stage={o.fields.StageName.value}
                                         opp-amount={o.fields.Amount.value}
                                         opp-close-date={o.fields.CloseDate.value}
-                                        opp-id={o.fields.Id.value}></c-opp-card>
+                                        opp-id={o.fields.Id.value}
+                                        onselected={handleSelectedFromCard} ></c-opp-card>
                             </div>
                         </template> 
                 </template>
@@ -38,6 +39,9 @@
                 <template lwc:else>
                     <p>Else... something broked?</p>
                 </template>
+            </template>
+            <template lwc:if={noRecordsMatch}>
+                <c-no-records-to-display message="No Opportunities found that match the filter."></c-no-records-to-display>
             </template>
         </lightning-card>
     </div>

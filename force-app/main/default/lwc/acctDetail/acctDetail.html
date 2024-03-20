@@ -1,0 +1,19 @@
+<template>
+    <template lwc:if={showDetail}>
+        <lightning-card title={detailLabel} icon-name="standard:account_info">
+ 
+            <lightning-button variant="brand" label="Edit" title="Edit" 
+                onclick={handleEditRecord} class="slds-m-left_x-small"
+                slot="actions"></lightning-button>
+            <div class="slds-m-left_small">
+                <lightning-record-form
+                    object-api-name="Account"
+                    record-id={acctId}
+                    layout-type="Compact"
+                    mode="readonly"
+                >
+                </lightning-record-form>
+            </div>        
+        </lightning-card>
+    </template> 
+</template>

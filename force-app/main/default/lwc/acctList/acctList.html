@@ -1,14 +1,19 @@
 <template>
-    <div class="slds-box">
-        <lightning-card title="Top Accounts List" icon-name="standard:account">
-            <template for:each={accounts} for:item="acct" for:index="idx">
-                <div key={acct.Id}>
-                    <c-acc-card rank={idx} name={acct.Name} annual-revenue={acct.AnnualRevenue}
-                            phone={acct.Phone} acct-id={acct.Id} 
-                            onselected={handleSelectedFromCard} 
-                            ></c-acc-card>
-                </div>
-            </template>
-        </lightning-card>
-    </div>    
+    <lightning-card title="Top Accounts List" icon-name="standard:account">
+        <lightning-button variant="brand" label="New" title="New" 
+                    onclick={handleNewRecord} class="slds-m-left_x-small"
+                    slot="actions"></lightning-button>
+        <div class="slds-float_right">
+            
+        </div>
+        <template for:each={accounts} for:item="acct" for:index="idx">
+            <div key={acct.Id}>
+                <c-acc-card rank={idx} name={acct.Name} annual-revenue={acct.AnnualRevenue}
+                        phone={acct.Phone} acct-id={acct.Id} 
+                        onselected={handleSelectedFromCard} 
+                        onedited={handleEdited}
+                        ></c-acc-card>
+            </div>
+        </template>
+    </lightning-card>    
 </template>

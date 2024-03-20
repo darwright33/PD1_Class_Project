@@ -1,6 +1,11 @@
 <template>
     <lightning-card>
-        <h3 slot="title"><a onclick={handleSelect}>{ranking}. {name}</a></h3>
+        <h3 slot="title"><a onclick={selectAcct}>{ranking}. {name}</a>
+            <lightning-icon class="slds-m-left_medium " title="Edit" icon-name="utility:edit"
+            size="x-small" onclick={editAcct}></lightning-icon>
+            <lightning-icon class="slds-m-left_small " title="Edit" icon-name="utility:open"
+            size="x-small" onclick={viewAcct}></lightning-icon>
+        </h3>
         <div class="slds-tile">
             <div class="slds-tile">
                 <div class="slds-tile__detail slds-m-left_medium">
@@ -14,7 +19,8 @@
                             <lightning-formatted-phone value={phone}></lightning-formatted-phone>
                         </dd>
                     </dl>
-                    <lightning-input type="checkbox" label="Show Contacts?" value={showContacts} onchange={handleShowContacts} ></lightning-input>
+                    <lightning-input type="checkbox" label="Show Contacts?" value={showContacts} 
+                                class="slds-m-bottom_xx-small" onchange={handleShowContacts} ></lightning-input>
                     <template lwc:if={showContacts}>
                         <template for:each={contacts} for:item="c">
                             <div key={c.Id}>
@@ -26,6 +32,11 @@
                                 </ul>
                             </div>
                         </template>                        
+                    </template>
+                    <template lwc:if={noContacts}>
+                        <div>
+                            <p style="font-size:14px; color:red; font-weight:bold; font-style:italic;">This Account has no contacts.</p>
+                        </div>
                     </template>
                 </div>
             </div>

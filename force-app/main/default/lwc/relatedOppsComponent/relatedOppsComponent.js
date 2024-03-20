@@ -84,7 +84,8 @@ export default class RelatedOppsComponent extends LightningElement {
             this.showDetails = false;
             // refreshApex(this.opps)
             // refreshApex(this.wiredResults)
-            this.getOpps;
+            //this.getOpps;
+            this.refreshRecords()
             //window.location.reload()
         }else {
             const evt = new ShowToastEvent({
@@ -97,6 +98,10 @@ export default class RelatedOppsComponent extends LightningElement {
 
     recordCanceled() {
         this.showDetails = false;
+    }
+
+    refreshRecords(){
+        refreshApex(this.opps);
     }
 
 }
