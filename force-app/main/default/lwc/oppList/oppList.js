@@ -1,5 +1,6 @@
 import { LightningElement, api, wire } from 'lwc';
 import { getRelatedListRecords } from 'lightning/uiRelatedListApi';
+import { refreshApex } from '@salesforce/apex';
 
 export default class OppList extends LightningElement {
 
@@ -45,6 +46,11 @@ export default class OppList extends LightningElement {
     handleComboboxChange(event){
         this.status = event.detail.value;
         this.updateOppList();
+    }
+
+    handleSelectedFromCard(event){
+        console.log('event detail: ' + JSON.stringify(event.detail));
+
     }
 
     updateOppList(){

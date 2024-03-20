@@ -1,6 +1,12 @@
 <template>
     <div class="slds-box">
         <lightning-card title="Top Accounts List" icon-name="standard:account">
+            <lightning-button variant="brand" label="New" title="New" 
+                        onclick={handleNewRecord} class="slds-m-left_x-small"
+                        slot="actions"></lightning-button>
+            <div class="slds-float_right">
+                
+            </div>
             <template for:each={accounts} for:item="acct" for:index="idx">
                 <div key={acct.Id}>
                     <c-acc-card rank={idx} name={acct.Name} annual-revenue={acct.AnnualRevenue}
