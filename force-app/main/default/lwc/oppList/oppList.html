@@ -40,6 +40,9 @@
                     <p>Else... something broked?</p>
                 </template>
             </template>
+            <template lwc:if={noRecordsMatch}>
+                <c-no-records-to-display message="No Opportunities found that match the filter."></c-no-records-to-display>
+            </template>
         </lightning-card>
     </div>
     

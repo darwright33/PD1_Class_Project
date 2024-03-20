@@ -12,6 +12,7 @@ export default class CaseList extends LightningElement {
     allCases;
     status = 'All';
     noRecordsMatch = false;
+    totalRecords = 0;
 
     comboOptions = [];
 
@@ -86,11 +87,16 @@ export default class CaseList extends LightningElement {
                     
                 }
             }
-            if(this.filteredCases.length === 0){
-                this.noRecordsMatch = true;
-            }
+            
             
         }
+        if(this.filteredCases.length === 0){
+            this.noRecordsMatch = true;
+        }
+
+        this.totalRecords = this.filteredCases.length;
+        const myEvt = new CustomEvent('caserecordcount', { detail: {totalRecords: this.totalRecords }});
+        this.dispatchEvent(myEvt);
     }
 
 

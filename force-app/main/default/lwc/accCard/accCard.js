@@ -82,7 +82,7 @@ export default class AccCard extends NavigationMixin(LightningElement) {
                     this.dispatchEvent(myToastEvent);   
                     // Tell Parent Component that a record has been edited to refresh the list
                     this.dispatchEvent(new CustomEvent(
-                        'selected', 
+                        'edited', 
                         {detail: {acctid: this.acctId, acctname: this.name}}
                     ));               
                 }
