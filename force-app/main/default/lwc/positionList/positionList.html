@@ -1,0 +1,45 @@
+<template>
+    <lightning-card title="Poisitions" icon-name="standard:employee_job_position">
+        <lightning-button variant="brand" label="New" title="New" 
+                    onclick={handleNewRecord} class="slds-m-left_x-small"
+                    slot="actions"></lightning-button>
+        <div class="slds-float_right">
+            
+        </div>
+        <div class="slds-m-bottom_medium slds-m-left_medium slds-m-right_medium">
+            <lightning-combobox
+            name="Status"
+            label="Select a value to filter Positions"
+            value={status}
+            placeholder="Select Status"
+            options={comboOptions}
+            onchange={handleComboboxChange} ></lightning-combobox>
+
+            <template lwc:if={posToDisplay}>            
+                <template lwc:if={filteredPositions}>                
+                        <template for:each={filteredPositions} for:item="p" >
+                            <div key={p.Id} class="slds-m-bottom_small">
+                                <c-position-card pos-description={p.Description__c}
+                                        pos-name={p.Name}
+                                        pos-id={p.Id}
+                                        pos-due-date={p.Due_Date__c}
+                                        pos-hiring-manager={p.HiringMan}
+                                        pos-status={p.Status__c}                                        
+                                        onposselected={handleSelectedFromCard} ></c-position-card>
+                            </div>
+                        </template> 
+                </template>
+                <template lwc:elseif={error}>
+                    <p>Error: {error}</p>
+                </template>
+                <template lwc:else>
+                    <p>Else... something broked?</p>
+                </template>
+            </template>
+            <template lwc:if={noRecordsMatch}>
+                <c-no-records-to-display message="No Positions found that match the filter."></c-no-records-to-display>
+            </template>
+        </div>
+        
+    </lightning-card>   
+</template>
