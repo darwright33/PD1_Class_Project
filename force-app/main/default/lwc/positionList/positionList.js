@@ -2,6 +2,7 @@ import { LightningElement, wire, api } from 'lwc';
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { refreshApex } from '@salesforce/apex';
 import { publish, MessageContext, subscribe, unsubscribe } from "lightning/messageService";
+import LightningModal from 'lightning/modal';
 import PositionMC from "@salesforce/messageChannel/PositionMessageChannel__c";
 import RecordModal from 'c/recordModal'
 import getPositions from '@salesforce/apex/PositionsController.getPositions';
@@ -22,6 +23,7 @@ export default class PositionList extends LightningElement {
     status = 'All';
     filteredPositions = [];   
     isRefresh = false;
+    renderFlow = false;
 
     comboOptions = [{label: 'All', value: 'All'},
                     {label: 'New', value: 'New'},
@@ -35,10 +37,10 @@ export default class PositionList extends LightningElement {
     @wire(getPositions)
     wiredAccts(wireObj){
         this.results = wireObj;
-        if(this.results.data){         
+        if(this.results.data){      
             this.allPositions = this.results.data.map(row => ({
                 ...row,
-                HiringMan: row.Hiring_Manager__r.Name
+                HiringMan: row.Hiring_Manager__r.Name 
             }));
             // Check if Record was Edited in PositionDetail and only change the selectedId/Name on page load
             if(!this.isRefresh){

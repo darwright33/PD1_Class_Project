@@ -1,0 +1,9 @@
+<template>
+    <lightning-modal-body>
+        <lightning-flow  if:true={renderFlow}
+        flow-api-name='Create_Position'
+         onstatuschange={handleFlow}  
+            >
+        </lightning-flow>
+    </lightning-modal-body>
+</template>

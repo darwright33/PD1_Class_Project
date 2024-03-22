@@ -13,8 +13,7 @@ export default class ApplicationList extends LightningElement {
     status = 'All';
     filteredApps = [];
     totalRecords = 0;
-    totalAmount = 0;
-    
+     
 
     comboOptions = [{label: 'All', value: 'All'},
                     {label: 'Applied', value: 'Applied'}, 
