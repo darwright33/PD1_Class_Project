@@ -1,0 +1,97 @@
+<template>
+    <lightning-card>
+        <div>
+            <div class="slds-tile__title slds-truncate slds-text-heading_small" title={appName}>
+                <a onclick={appSelected}>{appName}</a>
+                <lightning-icon class="slds-float_right" title="Edit" icon-name="utility:edit"
+                size="x-small" onclick={editRecord}></lightning-icon>
+            </div>
+            <div class="slds-tile__detail ">
+                <dl class="slds-list_horizontal slds-wrap">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Status">Status:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="Stage">{appStatus}</dd>
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Review Score">Review Score:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="Review Score">{appReviewScore}</dd>
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Reviews"># of Reviews:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="Number of Reviews">{appNumOfReviews}</dd>
+                </dl>
+            </div>
+            <div>
+                <lightning-input type="checkbox" label="Show Review Info?" value={showReviews} 
+                    class="slds-m-bottom_xx-small" onchange={handleShowReviews} ></lightning-input>
+                <template lwc:if={showReviews}>
+                    <template for:each={reviewsList} for:item="r">
+                        <div key={r.Id}>
+                            <lightning-layout>
+                                <lightning-layout-item size="4" class="slds-border_top slds-border_right slds-border_left  slds-text-heading_small">
+                                    Name:
+                                </lightning-layout-item>
+                                <lightning-layout-item size="8" class="slds-align_absolute-center slds-border_top slds-border_right  slds-text-heading_small">
+                                    <p class="slds-text-align_center">{r.Name}</p>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <template lwc:if={r.Recommend_for_Hire__c}>
+                                <lightning-layout>
+                                    <lightning-layout-item size="4" class="slds-border_top slds-border_right slds-border_left ">
+                                            Hire recommended?
+                                        </lightning-layout-item>
+                                    <lightning-layout-item size="8" class="slds-align_absolute-center slds-border_top slds-border_right">
+                                                            Yes
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </template>   
+                            <template lwc:if={r.Business_Skills__c}>
+                                <lightning-layout>
+                                    <lightning-layout-item size="4" class="slds-border_top slds-border_right slds-border_left ">
+                                        Business Skills:
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="8" class="slds-align_absolute-center slds-border_top slds-border_right ">
+                                        {r.Business_Skills__c}
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </template>
+                            <template lwc:if={r.Cultural_Fit__c}>
+                                <lightning-layout>
+                                    <lightning-layout-item size="4" class="slds-border_top slds-border_right slds-border_left ">
+                                        Cultrual Fit:
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="8" class="slds-align_absolute-center slds-border_top slds-border_right ">
+                                        {r.Cultural_Fit__c}
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </template>                                
+                            <template lwc:if={r.Technical_Skills__c}>
+                                <lightning-layout>
+                                    <lightning-layout-item size="4" class="slds-border_top slds-border_right slds-border_left ">
+                                        Technical Skills:
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="8" class="slds-align_absolute-center slds-border_top slds-border_right ">
+                                        {r.Technical_Skills__c}
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </template>                                
+                            <template lwc:if={r.Comments__c}>
+                                <lightning-layout class="slds-m-bottom_medium">
+                                    <lightning-layout-item size="4" class="slds-border_top slds-border_right slds-border_left  slds-border_bottom">
+                                        Comments:
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="8" class="slds-align_absolute-center slds-text-align_center slds-border_top slds-border_right slds-border_left slds-border_bottom">
+                                        <lightning-formatted-rich-text value={r.Comments__c}></lightning-formatted-rich-text>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </template>
+                            <template lwc:else>
+                                <p class="slds-border_top"></p>
+                            </template>
+                        </div>
+                    </template>
+                </template>
+                <template lwc:if={noReviews}>
+                    <div>
+                        <p style="font-size:14px; color:red; font-weight:bold; font-style:italic;">This Application has no reviews.</p>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </lightning-card>
+</template>

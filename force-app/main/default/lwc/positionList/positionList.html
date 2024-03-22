@@ -8,12 +8,13 @@
         </div>
         <div class="slds-m-bottom_medium slds-m-left_medium slds-m-right_medium">
             <lightning-combobox
-            name="Status"
-            label="Select a value to filter Positions"
-            value={status}
-            placeholder="Select Status"
-            options={comboOptions}
-            onchange={handleComboboxChange} ></lightning-combobox>
+                name="Status"
+                label="Select a value to filter Positions"
+                value={status}
+                placeholder="Select Status"
+                options={comboOptions}
+                onchange={handleComboboxChange} 
+            ></lightning-combobox>
 
             <template lwc:if={posToDisplay}>            
                 <template lwc:if={filteredPositions}>                

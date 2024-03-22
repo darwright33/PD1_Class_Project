@@ -19,10 +19,9 @@ export default class PositionList extends LightningElement {
     allPositions = [];
     posToDisplay = false;
     noRecordsMatch = false;
-    status = 'New';
+    status = 'All';
     filteredPositions = [];   
-    arryPosition = []; 
-    myList
+    isRefresh = false;
 
     comboOptions = [{label: 'All', value: 'All'},
                     {label: 'New', value: 'New'},
@@ -36,18 +35,18 @@ export default class PositionList extends LightningElement {
     @wire(getPositions)
     wiredAccts(wireObj){
         this.results = wireObj;
-
-        if(this.results.data){
-            //this.allPositions = this.results.data;
-            
-
+        if(this.results.data){         
             this.allPositions = this.results.data.map(row => ({
                 ...row,
                 HiringMan: row.Hiring_Manager__r.Name
             }));
-            this.selectedId = this.allPositions[0].Id;
-            this.selectedName = this.allPositions[0].Name; 
-            console.log('due date: ' + this.allPositions[0].Due_Date__c)
+            // Check if Record was Edited in PositionDetail and only change the selectedId/Name on page load
+            if(!this.isRefresh){
+                this.selectedId = this.allPositions[0].Id;
+                this.selectedName = this.allPositions[0].Name;
+            }
+             
+
             this.posToDisplay = true;
 
             this.sendMsgService(this.selectedId, this.selectedName);
@@ -61,6 +60,7 @@ export default class PositionList extends LightningElement {
         this.filteredPositions = [];
         let currentRecord = {};       
 
+        //console.log('this.allPositions: ' + JSON.stringify(this.allPositions))
         if(this.status === 'All'){
             this.filteredPositions = this.allPositions;
         } else {
@@ -94,13 +94,14 @@ export default class PositionList extends LightningElement {
     }
 
     handleSelectedFromCard(event){
-        this.selectedId = event.detail.posId;
-        this.selectedName = event.detail.posName;
+        this.selectedId = event.detail.Id;
+        this.selectedName = event.detail.Name;
         this.sendMsgService(this.selectedId, this.selectedName);
     }
 
     handleEdited(){
         // refresh AccountList if edited.
+        this.isRefresh = true;
         this.refreshPosList();
     }
 
@@ -148,7 +149,7 @@ export default class PositionList extends LightningElement {
 
     handleMessage(message) {
         if(message.isEdited === 'true'){
-            this.refreshPosList();
+            this.handleEdited();
         }
     }
 
