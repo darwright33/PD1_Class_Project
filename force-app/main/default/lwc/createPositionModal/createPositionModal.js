@@ -3,9 +3,7 @@ import LightningModal from 'lightning/modal';
 
 export default class CreatePositionModal extends LightningModal {
 
-    @api launchFlow;
-
-    renderFlow = false;
+    @api headerLabel;
 
     handleCancel(){
         this.close('modcancel');
@@ -15,23 +13,20 @@ export default class CreatePositionModal extends LightningModal {
         this.close(event);
     }
 
-    launchFlow(){
-        this.renderFlow = true;
-    }
-    
     handleFlow(event){
         if (event.detail.status === 'FINISHED_SCREEN') {
-            // Refresh List
-            this.refreshPosList();
+            // // Refresh List
+            // this.refreshPosList();
 
-            // Close Flow
-            this.renderFlow = false;
+            // // Close Flow
+            // this.renderFlow = false;
 
-  
+            this.close(event);
         }
         else{
           console.log('Flow execution encountered an unexpected status.');
           }
+          this.close(event);
         
     }
 

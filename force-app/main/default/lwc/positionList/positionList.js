@@ -2,12 +2,9 @@ import { LightningElement, wire, api } from 'lwc';
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { refreshApex } from '@salesforce/apex';
 import { publish, MessageContext, subscribe, unsubscribe } from "lightning/messageService";
-import LightningModal from 'lightning/modal';
 import PositionMC from "@salesforce/messageChannel/PositionMessageChannel__c";
-import RecordModal from 'c/recordModal'
 import getPositions from '@salesforce/apex/PositionsController.getPositions';
-
-
+import RecordModal from 'c/recordModal'
 
 export default class PositionList extends LightningElement {
 
@@ -62,7 +59,6 @@ export default class PositionList extends LightningElement {
         this.filteredPositions = [];
         let currentRecord = {};       
 
-        //console.log('this.allPositions: ' + JSON.stringify(this.allPositions))
         if(this.status === 'All'){
             this.filteredPositions = this.allPositions;
         } else {
@@ -106,6 +102,21 @@ export default class PositionList extends LightningElement {
         this.isRefresh = true;
         this.refreshPosList();
     }
+
+    // launchCreatePositionFlow(event){
+    //     this.renderFlow - true;
+    //     if (event.detail.status === 'FINISHED_SCREEN') {
+    //         // Refresh List
+    //         this.refreshPosList();
+
+    //         // Close Flow
+    //         this.renderFlow = false;
+    //     }
+    //     else{
+    //       console.log('Flow execution encountered an unexpected status.');
+    //       }
+        
+    // }
 
     handleNewRecord(){
         RecordModal.open({
