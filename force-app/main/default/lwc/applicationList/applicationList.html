@@ -1,0 +1,40 @@
+<template>
+    <div class="slds-m-left_medium slds-m-right_medium" >
+        <div class="slds-m-bottom_medium">
+            <lightning-combobox
+                name="Status"
+                label="Select value to filter Applications"
+                value={status}
+                placeholder="Select Status"
+                options={comboOptions}
+                onchange={handleComboboxChange} 
+            ></lightning-combobox>                
+        </div>
+        
+        <template lwc:if={appsToDisplay}>               
+            <template lwc:if={filteredApps}>
+                
+                    <template for:each={filteredApps} for:item="a" >
+                        <div key={a.Id} class="slds-m-bottom_small">
+                            <c-application-card
+                                app-id={a.Id}
+                                app-name={a.Name}
+                                app-status={a.Status__c}
+                                app-num-of-reviews={a.Num_of_Reviews__c}
+                                app-review-score={a.Review_Score__c}
+                            ></c-application-card>
+                        </div>
+                    </template> 
+            </template>
+            <template lwc:elseif={error}>
+                <p>Error: {error}</p>
+            </template>
+            <template lwc:else>
+                <p>Else... something broked?</p>
+            </template>
+        </template>
+        <template lwc:if={noRecordsMatch}>
+            <c-no-records-to-display message="No Applications found that match the filter."></c-no-records-to-display>
+        </template>
+    </div>
+</template>

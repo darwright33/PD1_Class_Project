@@ -1,0 +1,21 @@
+<template>
+    <template lwc:if={loadingRecord}>
+        <lightning-spinner></lightning-spinner>
+    </template>
+    <template lwc:if={showDetail}>
+        <lightning-card title={detailLabel} icon-name="standard:account_info">
+            <lightning-button variant="brand" label="Edit" title="Edit" 
+                onclick={handleEditRecord} class="slds-m-left_x-small"
+                slot="actions"></lightning-button>
+            <div class="slds-m-left_small">
+                <lightning-record-form
+                    object-api-name="Position__c"
+                    record-id={posId}
+                    layout-type="Full"
+                    mode="readonly"
+                >
+                </lightning-record-form>
+            </div>        
+        </lightning-card>
+    </template> 
+</template>

@@ -1,0 +1,30 @@
+<template>
+    <lightning-card>
+        <div>
+            <article class="slds-tile slds-m-left_medium">
+                <div class="slds-tile__detail ">
+                    <dl class="slds-list_horizontal slds-wrap">
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Name">Position Name:</dt>
+                        <dd class="slds-item_detail slds-truncate" title="Name">
+                            <a onclick={posSelected}>{posName}</a>
+                            <lightning-icon class="slds-m-left_small " title="View" icon-name="utility:open"
+                            size="x-small" onclick={viewRecord}></lightning-icon>
+                        </dd>
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Due Date">Due Date:</dt>
+                        <dd class="slds-item_detail slds-truncate" title="Due Date">
+                            <lightning-formatted-date-time value={posDueDate} ></lightning-formatted-date-time>
+                        </dd>
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Status">Status:</dt>
+                        <dd class="slds-item_detail slds-truncate" title="Status">{posStatus}</dd>
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Hiring Manager">Hiring Manager:</dt>
+                        <dd class="slds-item_detail slds-truncate" title="Hiring Manager">{posHiringManager}</dd>
+                        <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Description">Description:</dt>
+                        <dd class="slds-item_detail slds-truncate" title="Description">
+                            <lightning-formatted-rich-text value={posDescription} ></lightning-formatted-rich-text>
+                        </dd>
+                    </dl>
+                </div>
+            </article>
+        </div>
+    </lightning-card>
+</template>
