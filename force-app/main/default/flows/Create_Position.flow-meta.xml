@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>60.0</apiVersion>
+    <description>Creates a new position from Job Profile</description>
+    <dynamicChoiceSets>
+        <description>Hold Hiring Manager User Records</description>
+        <name>HiringManager</name>
+        <dataType>String</dataType>
+        <displayField>Name</displayField>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>isHiringManager__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>User</object>
+        <valueField>Id</valueField>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <description>Records from the Job Profiles</description>
+        <name>JobProfileChoiceSet</name>
+        <dataType>String</dataType>
+        <displayField>Name</displayField>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>isActive__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Job_Profile__c</object>
+        <valueField>Id</valueField>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <description>Picklist of Status</description>
+        <name>PositionStatus</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Status__c</picklistField>
+        <picklistObject>Position__c</picklistObject>
+    </dynamicChoiceSets>
+    <environments>Default</environments>
+    <formulas>
+        <name>baseURL</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!$Api.Partner_Server_URL_260}, FIND(&apos;/services&apos;, {!$Api.Partner_Server_URL_260}))</expression>
+    </formulas>
+    <formulas>
+        <description>More details from Error Message</description>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!$Flow.FaultMessage}, FIND(&quot;You can look up ExceptionCode&quot; ,{!$Flow.FaultMessage} ) -1)</expression>
+    </formulas>
+    <interviewLabel>Create Position {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create Position</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordCreates>
+        <description>Create New Position</description>
+        <name>Create_Position</name>
+        <label>Create Position</label>
+        <locationX>543</locationX>
+        <locationY>614</locationY>
+        <connector>
+            <targetReference>Record_Created</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Position_Error_Screen</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>Description__c</field>
+            <value>
+                <elementReference>GetJobProfile.Summary__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Due_Date__c</field>
+            <value>
+                <elementReference>Due_Date</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Hiring_Manager__c</field>
+            <value>
+                <elementReference>Select_Hiring_Manager</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Job_Profile__c</field>
+            <value>
+                <elementReference>Job_Profiles.selectedChoiceValues</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>Enter_Position_Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Salary__c</field>
+            <value>
+                <elementReference>Salary</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <elementReference>Status</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Position__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <description>Get the Job profile record details</description>
+        <name>GetJobProfile</name>
+        <label>GetJobProfile</label>
+        <locationX>540</locationX>
+        <locationY>290</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Enter_Position_Details</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Job_Profiles.selectedChoiceValues</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Job_Profile__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <screens>
+        <description>Choose a Job Profile to create a position from.</description>
+        <name>Choose_the_Job_Profile</name>
+        <label>Choose the Job Profile</label>
+        <locationX>540</locationX>
+        <locationY>182</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>GetJobProfile</targetReference>
+        </connector>
+        <fields>
+            <name>Job_Profiles</name>
+            <choiceReferences>JobProfileChoiceSet</choiceReferences>
+            <extensionName>flowruntime:choiceLookup</extensionName>
+            <fieldText>Job Profiles</fieldText>
+            <fieldType>ComponentChoice</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Confirm Job Profile Details</description>
+        <name>Confirm_Job_Profile_Details</name>
+        <label>Confirm Job Profile Details</label>
+        <locationX>144</locationX>
+        <locationY>341</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>JobSummary</name>
+            <fieldText>&lt;p&gt;Summary: {!GetJobProfile.Summary__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>JobKeyDuties</name>
+            <fieldText>&lt;p&gt;Key Duties: {!GetJobProfile.Key_Duties__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>JobMinSalary</name>
+            <fieldText>&lt;p&gt;Minimum Yearly Salary: {!GetJobProfile.Minimum_Pay__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>JobMaxSalary</name>
+            <fieldText>&lt;p&gt;Maximum Yearly Salary:{!GetJobProfile.Maximum_Pay__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>JobrequiredSkills</name>
+            <fieldText>&lt;p&gt;Required Skills: {!GetJobProfile.Required_Skills__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>JobBeneificalSkill</name>
+            <fieldText>&lt;p&gt;Beneficial Skills: {!GetJobProfile.Beneficial_Skills__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Enter the details for the Position</description>
+        <name>Enter_Position_Details</name>
+        <label>Enter Position Details</label>
+        <locationX>540</locationX>
+        <locationY>506</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Create_Position</targetReference>
+        </connector>
+        <fields>
+            <name>JobProfileName</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Job Profile: {!GetJobProfile.Name}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Enter_Position_Name</name>
+            <dataType>String</dataType>
+            <fieldText>Enter Position Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Salary</name>
+            <dataType>Currency</dataType>
+            <fieldText>Salary</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <scale>0</scale>
+        </fields>
+        <fields>
+            <name>Status</name>
+            <choiceReferences>PositionStatus</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Status</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Due_Date</name>
+            <dataType>Date</dataType>
+            <fieldText>Due Date</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Select_Hiring_Manager</name>
+            <choiceReferences>HiringManager</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Select Hiring Manager</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Shows any errors related to creating the Position record</description>
+        <name>Position_Error_Screen</name>
+        <label>Position Error Screen</label>
+        <locationX>770</locationX>
+        <locationY>616</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>DisplayError</name>
+            <fieldText>&lt;p&gt;An error occurred while creating the record: &lt;span style=&quot;color: rgb(234, 9, 9);&quot;&gt;{!errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Record Created Screen</description>
+        <name>Record_Created</name>
+        <label>Record Created</label>
+        <locationX>544</locationX>
+        <locationY>790</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>RecordCreated</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;Record Created Successfully, &lt;a href=&quot;{!baseURL}{!Create_Position}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;Click Here&lt;/strong&gt;&lt;/a&gt; to Navigate to the Record.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>414</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Choose_the_Job_Profile</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+</Flow>
