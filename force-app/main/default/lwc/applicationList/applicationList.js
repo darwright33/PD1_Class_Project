@@ -1,5 +1,6 @@
 import { LightningElement, wire, api } from 'lwc';
 import getApplications from '@salesforce/apex/ApplicationsController.getApplications';
+import getReviews from '@salesforce/apex/ReviewController.getReviews';
 
 
 export default class ApplicationList extends LightningElement {
@@ -13,6 +14,9 @@ export default class ApplicationList extends LightningElement {
     status = 'All';
     filteredApps = [];
     totalRecords = 0;
+    // showInterviewSchedule = false;
+    // reviewsList;
+    // showScheduleInterview = false;
      
 
     comboOptions = [{label: 'All', value: 'All'},
@@ -91,6 +95,28 @@ export default class ApplicationList extends LightningElement {
         this.dispatchEvent(myEvt);
 
     }
+
+    // handleInterviewSchedule(){
+    //     if(this.showInterviewSchedule){
+    //         this.showInterviewSchedule = false;
+    //     }else {
+    //         getReviews({appId: this.appId})
+    //         .then((result) => {
+    //             console.log(result)
+    //             if(result.length !== 0 || result !== undefined){
+    //                 // If there are results, show the details
+    //                 this.reviewsList = result;
+    //             }
+            
+    //         })
+    //         .catch((error) => {
+    //             console.log(error)
+    //             this.reviewsList = undefined;
+    //         });
+    //     }
+        
+    // }
+    
 }
 
 

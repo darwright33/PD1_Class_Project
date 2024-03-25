@@ -12,9 +12,12 @@ export default class ApplicationCard extends NavigationMixin(LightningElement) {
     @api appNumOfReviews; 
     @api appReviewScore;
 
+    reviewsList;
+    interviewList;
+
     showReviews = false;
     noReviews = false;
-    reviewsList;
+    showInterviewSchedule = false;
 
     // Get reviews and show or hide them
     handleShowReviews(){
@@ -28,27 +31,52 @@ export default class ApplicationCard extends NavigationMixin(LightningElement) {
         }
         else {
             getReviews({appId: this.appId})
+                .then((result) => {
+                    console.log(result)
+                    if(result.length !== 0 || result !== undefined){
+                        // If there are results, show the details
+                        this.showReviews = true;
+                        this.noReviews = false;
+                        this.reviewsList = result;
+                    }
+                    if(result.length === 0 && !this.noReviews){
+                        // If no results, show no Reviews Messages
+                        this.showReviews = false;
+                        this.noReviews = true;
+                    }
+                })
+                .catch((error) => {
+                    console.log(error)
+                    this.reviewsList = undefined;
+                });            
+        }
+
+    }
+
+    handleInterviewSchedule(){
+        if(this.showInterviewSchedule){
+            this.showInterviewSchedule = false;
+        } else {
+            this.showInterviewSchedule = true;
+            getReviews({appId: this.appId})
             .then((result) => {
                 console.log(result)
                 if(result.length !== 0 || result !== undefined){
-                    // If there are results, show the details
-                    this.showReviews = true;
-                    this.noReviews = false;
-                    this.reviewsList = result;
-                }
-                if(result.length === 0 && !this.noReviews){
-                    // If no results, show no Reviews Messages
-                    this.showReviews = false;
-                    this.noReviews = true;
+                    this.interviewList = result;
                 }
             })
             .catch((error) => {
                 console.log(error)
-                this.reviews = undefined;
+                this.interviewList = undefined;
             });
-        }
+        } 
+        // Loop thru and check for Interview_Time__c is NULL and add keu/value if it is blank for HTML
+
+        // Then make flow to set time and add Button to launch the flow on the Card if NULL
 
     }
+    
+
 
     viewRecord(){
         this[NavigationMixin.Navigate]({
@@ -87,7 +115,5 @@ export default class ApplicationCard extends NavigationMixin(LightningElement) {
         })
         .catch((error) => console.error(error));
     }
-
-
 
 }
