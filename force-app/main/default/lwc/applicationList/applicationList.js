@@ -52,6 +52,9 @@ export default class ApplicationList extends LightningElement {
         this.filteredApps = [];
         let currentRecord = {};       
 
+        // Reset the no Records Message when the List is updated
+        this.noRecordsMatch = false;
+
         if(this.status === 'All'){
             this.filteredApps = this.allApps;
         } else {

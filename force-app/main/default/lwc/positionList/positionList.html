@@ -1,15 +1,19 @@
 <template>
-    <lightning-card title="Poisitions" icon-name="standard:employee_job_position">
+    <lightning-card title="Positions" icon-name="standard:employee_job_position">
         <lightning-button variant="brand" label="New" title="New" 
                     onclick={handleNewRecord} class="slds-m-left_x-small"
                     slot="actions"></lightning-button>
 
-        <!-- <lightning-button variant="brand" label="FLOW" title="FLOW" 
+        <lightning-button variant="brand" label="Quick Create" title="Quick Create" 
                     onclick={launchCreatePositionFlow} class="slds-m-left_x-small"
-                    slot="actions"></lightning-button> -->
+                    slot="actions"></lightning-button>
         
-        <div class="slds-float_right">
-            
+        <div>
+            <lightning-flow if:true={renderFlow}
+                flow-api-name='Create_Position'
+                onstatuschange={handleFlow}  
+                    >
+            </lightning-flow>
         </div>
         <div class="slds-m-bottom_medium slds-m-left_medium slds-m-right_medium">
             <lightning-combobox

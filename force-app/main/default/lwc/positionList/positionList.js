@@ -32,7 +32,7 @@ export default class PositionList extends LightningElement {
     msgContext;
 
     @wire(getPositions)
-    wiredAccts(wireObj){
+    wiredPositions(wireObj){
         this.results = wireObj;
         if(this.results.data){      
             this.allPositions = this.results.data.map(row => ({
@@ -103,20 +103,26 @@ export default class PositionList extends LightningElement {
         this.refreshPosList();
     }
 
-    // launchCreatePositionFlow(event){
-    //     this.renderFlow - true;
-    //     if (event.detail.status === 'FINISHED_SCREEN') {
-    //         // Refresh List
-    //         this.refreshPosList();
+    launchCreatePositionFlow(){
+        console.log('In launchCreatePositionFlow')
+        this.renderFlow = true;
+    }
 
-    //         // Close Flow
-    //         this.renderFlow = false;
-    //     }
-    //     else{
-    //       console.log('Flow execution encountered an unexpected status.');
-    //       }
+    handleFlow(event){
         
-    // }
+        if (event.detail.status === 'FINISHED') {
+            // Refresh List
+            this.refreshPosList();
+
+            // Close Flow
+            this.renderFlow = false;
+            
+        }
+        else{
+          console.log('Flow execution encountered an unexpected status.');
+          }
+        
+    }
 
     handleNewRecord(){
         RecordModal.open({
