@@ -1,7 +1,26 @@
+/**
+ * LWC to shows the current Applications for a selected/Passed In 
+ * Application Record with an option to show the Basic Review Data
+ * And check the Interview Schedule
+ * @alias ApplicationCard
+ * @extends NavigationMixin(LightningElement)
+ * @hideconstructor
+ *
+ * @example
+ * <c-application-card
+        app-id={a.Id}
+        app-name={a.Name}
+        app-status={a.Status__c}
+        app-num-of-reviews={a.Num_of_Reviews__c}
+        app-review-score={a.Review_Score__c}
+    ></c-application-card>
+
+    @author            : Dar Wright
+    Created Date       : March 20, 2024
+ */
 import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-import { refreshApex } from '@salesforce/apex';
 import RecordModal from 'c/recordModal'
 import getReviews from '@salesforce/apex/ReviewController.getReviews';
 import getInterviews from '@salesforce/apex/ReviewController.getInterviews';
@@ -33,9 +52,9 @@ export default class ApplicationCard extends NavigationMixin(LightningElement) {
             this.showReviews = false;
         }
         else {
+            // Get the Review Records imperatively as needed. 
             getReviews({appId: this.appId})
                 .then((result) => {
-                    // console.log(result)
                     if(result.length !== 0 || result !== undefined){
                         // If there are results, show the details
                         this.showReviews = true;
@@ -65,24 +84,21 @@ export default class ApplicationCard extends NavigationMixin(LightningElement) {
     }
 
     handleInterviewTimeSuccess(){
-        console.log('in handleInterviewTimeSuccess')
-        // this.handleInterviewSchedule();
-        // this.scheduleInterview = false;
-        // this.showInterviewSchedule = false;
+        // Cannot use ApexRefresh on imperative Apex Calls, so reloading the whole window due to time constraints 
+        // and effort required to Refactor the entire App. 
         window.location.reload()
     }
 
     handleInterviewSchedule(){
-        // console.log('in handleInterviewSchedule')
+        // If Interview are showing, stop showing them
         if(this.showInterviewSchedule){
             this.showInterviewSchedule = false;
         } else {
+            // Show results
             this.showInterviewSchedule = true;
+            // Get the Review Records imperatively as needed. 
             getInterviews({appId: this.appId})
             .then((result) => {
-                // console.log('result: ')
-                // console.log(result)
-                // console.log(typeof result)
                 this.interviewList = result;
             })
             .catch((error) => {
@@ -93,6 +109,7 @@ export default class ApplicationCard extends NavigationMixin(LightningElement) {
 
     }
     
+    // Open the Selected Application Record
     viewRecord(){
         this[NavigationMixin.Navigate]({
             type: 'standard__recordPage',
@@ -103,10 +120,12 @@ export default class ApplicationCard extends NavigationMixin(LightningElement) {
         });
     }
 
+    // Handle the click of the View Button for the Application
     appSelected(){
         this.viewRecord();
     }
 
+    // Handle the click of the Edit Button to Edit the Application Record
     editRecord(){
         RecordModal.open({
             size: 'small',

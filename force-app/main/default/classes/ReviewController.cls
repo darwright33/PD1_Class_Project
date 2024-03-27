@@ -1,5 +1,25 @@
+/*
+*********************************************************
+Apex Class Name    : ReviewController
+Created Date       : March 20, 2024
+@description       : This is class is used for Sending Review Object data to LWCs
+@author            : Dar Wright
+Modification Log:
+Ver   Date         Author                               Modification
+1.0   03-27-2024   Dar Wright                      Initial Version
+*********************************************************
+*/
 public with sharing class ReviewController {
 
+    /*
+    *********************************************************
+    @Method Name    : getReviews
+    @author         : Dar Wright
+    @description    : Send Review records to LWC that are related to an Application Record
+    @param          : The Application Record Id - appId
+    @return         : List<Review__c> 
+    ********************************************************
+    */
     @AuraEnabled(cacheable=true)
     public static List<Review__c> getReviews(String appId){
         return [SELECT Id, Name, Business_Skills__c, Comments__c, Cultural_Fit__c, Recommend_for_Hire__c,
@@ -9,6 +29,15 @@ public with sharing class ReviewController {
                 WITH SECURITY_ENFORCED];
     }
 
+    /*
+    *********************************************************
+    @Method Name    : getInterviews
+    @author         : Dar Wright
+    @description    : Send ReviewWrapper records to LWC that are related to an Application Record
+    @param          : The Application Record Id - appId
+    @return         : List<ReviewWrapper>
+    ********************************************************
+    */
     @AuraEnabled(cacheable=true)
     public static List<ReviewWrapper> getInterviews(String appId){
         List<Review__c> reviewList = [SELECT Id, Name, Interviewer__r.Interviewer__r.Name, 
@@ -28,7 +57,15 @@ public with sharing class ReviewController {
         return wrapList;
     }
 
-    // Get Interview schedule for the next 10 days. Used 11 to account for today. 
+    /*
+    *********************************************************
+    @Method Name    : getInterviewerSchedule
+    @author         : Dar Wright
+    @description    : Send Review records for Specified Interviewer
+    @param          : The Interview Record Id - interviewerId
+    @return         : List<Review__c>
+    ********************************************************
+    */
     @AuraEnabled(cacheable=true)
     public static List<Review__c> getInterviewerSchedule(String interviewerId){
         return [SELECT Id, Name, Interview_Time__c, Application__r.Position__r.Name
@@ -36,10 +73,19 @@ public with sharing class ReviewController {
                     WHERE Interviewer__r.Interviewer__r.Id = :interviewerId
                     AND (Interview_Time__c = NEXT_N_DAYS:11
                     OR Interview_Time__c = NULL)
-                    WITH SECURITY_ENFORCED];
+                    WITH SECURITY_ENFORCED
+                    ORDER BY Interview_Time__c ASC];
     }
 
-    // Wrapper class to flatten data from related objects
+    /*
+    *********************************************************
+    @Method Name    : ReviewWrapper
+    @author         : Dar Wright
+    @description    : Flattens Data down to one level for LWC
+    @param          : 
+    @return         : 
+    ********************************************************
+    */
     public class ReviewWrapper{
         @AuraEnabled public Review__c revRecord{get;set;}
         @AuraEnabled public String InterviewerName {get; set;}
@@ -48,15 +94,14 @@ public with sharing class ReviewController {
         @AuraEnabled public String InterviewerId {get; set;}
         @AuraEnabled public DateTime InterviewTime {get; set;}
         @AuraEnabled public Boolean showInterviewButton {get; set;}
-        @AuraEnabled public Boolean showNoInterviewScheduled {get; set;}
 
         public ReviewWrapper(Review__c revRecord){
             this.revRecord = revRecord;
             this.InterviewerName = revRecord.Interviewer__r.Interviewer__r.Name;
-            this.InterviewerId = revRecord.Interviewer__r.Interviewer__r.Id;
-            this.InterviewTime = revRecord.Interview_Time__c;
             this.ReviewId = revRecord.Id;
             this.ReviewName = revRecord.Name;
+            this.InterviewerId = revRecord.Interviewer__r.Interviewer__r.Id;
+            this.InterviewTime = revRecord.Interview_Time__c;
             if(revRecord.Interview_Time__c != NULL ){
                 this.showInterviewButton = false;
             } else {
