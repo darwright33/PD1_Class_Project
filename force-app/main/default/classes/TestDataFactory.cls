@@ -149,11 +149,11 @@ public class TestDataFactory {
 
     public static List<Review__c> createReviews(List<Application__c> appList, List<Interviewer__c> intList){
         List<Review__c> rewList = new List<Review__c>();
-
-        for(Integer i = 0; i <= appList.size(); i++){
+        for(Integer i = 0; i < appList.size(); i++){
             Review__c rev = new Review__c();
             rev.Application__c = appList[i].Id;
             rev.Interviewer__c = intList[i].Id;
+            rev.Interview_Time__c = NULL;
             rev.Name = 'Test Review ' + System.TODAY();
             rewList.add(rev);
         }
