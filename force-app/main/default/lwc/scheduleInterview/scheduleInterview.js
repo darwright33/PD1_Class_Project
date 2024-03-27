@@ -8,9 +8,7 @@ export default class ScheduleInterview extends LightningElement {
     @api interviewerId 
     @api reviewName
     @api interviewerName;
-    // @api reviewId = 'a03al00000307iwAAA';
-    // @api reviewName = 'SF Dev I 001 - Sarah Jane Smith'
-    // @api interviewerId = '005al0000005wnRAAQ';
+    
     interviewerList = [];
     results
 

@@ -48,15 +48,14 @@ public with sharing class ReviewController {
         @AuraEnabled public String InterviewerId {get; set;}
         @AuraEnabled public DateTime InterviewTime {get; set;}
         @AuraEnabled public Boolean showInterviewButton {get; set;}
-        @AuraEnabled public Boolean showNoInterviewScheduled {get; set;}
 
         public ReviewWrapper(Review__c revRecord){
             this.revRecord = revRecord;
             this.InterviewerName = revRecord.Interviewer__r.Interviewer__r.Name;
-            this.InterviewerId = revRecord.Interviewer__r.Interviewer__r.Id;
-            this.InterviewTime = revRecord.Interview_Time__c;
             this.ReviewId = revRecord.Id;
             this.ReviewName = revRecord.Name;
+            this.InterviewerId = revRecord.Interviewer__r.Interviewer__r.Id;
+            this.InterviewTime = revRecord.Interview_Time__c;
             if(revRecord.Interview_Time__c != NULL ){
                 this.showInterviewButton = false;
             } else {
