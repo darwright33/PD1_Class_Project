@@ -1,8 +1,10 @@
 import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import { refreshApex } from '@salesforce/apex';
 import RecordModal from 'c/recordModal'
 import getReviews from '@salesforce/apex/ReviewController.getReviews';
+import getInterviews from '@salesforce/apex/ReviewController.getInterviews';
 
 export default class ApplicationCard extends NavigationMixin(LightningElement) {
 
@@ -18,6 +20,7 @@ export default class ApplicationCard extends NavigationMixin(LightningElement) {
     showReviews = false;
     noReviews = false;
     showInterviewSchedule = false;
+    scheduleInterview = false;
 
     // Get reviews and show or hide them
     handleShowReviews(){
@@ -32,7 +35,7 @@ export default class ApplicationCard extends NavigationMixin(LightningElement) {
         else {
             getReviews({appId: this.appId})
                 .then((result) => {
-                    console.log(result)
+                    // console.log(result)
                     if(result.length !== 0 || result !== undefined){
                         // If there are results, show the details
                         this.showReviews = true;
@@ -46,38 +49,50 @@ export default class ApplicationCard extends NavigationMixin(LightningElement) {
                     }
                 })
                 .catch((error) => {
-                    console.log(error)
+                    console.error(error)
                     this.reviewsList = undefined;
                 });            
         }
 
     }
 
+    handleScheduleInterviewButton(){
+        this.scheduleInterview = true;
+    }
+
+    handleInterviewTimeCancel(){
+        this.scheduleInterview = false;
+    }
+
+    handleInterviewTimeSuccess(){
+        console.log('in handleInterviewTimeSuccess')
+        // this.handleInterviewSchedule();
+        // this.scheduleInterview = false;
+        // this.showInterviewSchedule = false;
+        window.location.reload()
+    }
+
     handleInterviewSchedule(){
+        // console.log('in handleInterviewSchedule')
         if(this.showInterviewSchedule){
             this.showInterviewSchedule = false;
         } else {
             this.showInterviewSchedule = true;
-            getReviews({appId: this.appId})
+            getInterviews({appId: this.appId})
             .then((result) => {
-                console.log(result)
-                if(result.length !== 0 || result !== undefined){
-                    this.interviewList = result;
-                }
+                // console.log('result: ')
+                // console.log(result)
+                // console.log(typeof result)
+                this.interviewList = result;
             })
             .catch((error) => {
-                console.log(error)
+                console.error(error)
                 this.interviewList = undefined;
             });
         } 
-        // Loop thru and check for Interview_Time__c is NULL and add keu/value if it is blank for HTML
-
-        // Then make flow to set time and add Button to launch the flow on the Card if NULL
 
     }
     
-
-
     viewRecord(){
         this[NavigationMixin.Navigate]({
             type: 'standard__recordPage',

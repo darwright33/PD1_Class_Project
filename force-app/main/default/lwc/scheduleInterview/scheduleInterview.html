@@ -1,0 +1,50 @@
+<template>
+    <div class="slds-box slds-m-bottom_small">
+        <lightning-layout>
+            <lightning-layout-item size="12" class="slds-align_absolute-center slds-border_top slds-border_right slds-border_left slds-border_bottom slds-text-heading_small">
+                Current Interviews Scheduled for: {interviewerName}
+            </lightning-layout-item>
+        </lightning-layout>
+        <template for:each={interviewerList} for:item="i">        
+            <div key={i.Id}>                        
+                <template lwc:if={i.InterviewTime}>
+                    <lightning-layout>
+                        <lightning-layout-item size="6" class="slds-border_top slds-border_right slds-border_left  slds-text-heading_small">
+                            Position Name:
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" class=" slds-border_top slds-border_right">
+                            <p class="slds-text-align_center">{i.PositionName}</p>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    <lightning-layout>
+                        <lightning-layout-item size="6" class="slds-border_top slds-border_right slds-border_left slds-border_bottom slds-text-heading_small">
+                            Interview Time:
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" class=" slds-border_top slds-border_right slds-border_bottom">
+                            <p class="slds-text-align_center"><lightning-formatted-date-time value={i.InterviewTime} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                minute="2-digit" time-zone-name="short"></lightning-formatted-date-time></p>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+                
+            </div>
+        </template>
+    </div>
+    <div class="slds-box">
+        <lightning-layout>
+            <lightning-layout-item size="12" class="slds-border_top slds-border_right slds-border_left slds-border_bottom slds-text-heading_small">
+                Currently Editing Interview time for <b>{reviewName}</b>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-record-form
+            object-api-name="Review__c"
+            record-id={reviewId}
+            fields={fields}
+            mode="edit"
+            onsuccess={recordSaved}
+            oncancel={recordCanceled}
+        >
+        </lightning-record-form>
+    </div>      
+    
+</template>
